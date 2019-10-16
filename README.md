@@ -1,6 +1,6 @@
 # CMIP6 Hackathon - Multi-Generational Climate Model Inter-Comparison
 
-See below for project description (modified from https://discourse.pangeo.io/t/how-has-the-performance-of-climate-models-changed-over-30-years-of-model-development/113).
+See below for project description (modified from <a href="https://discourse.pangeo.io/t/how-has-the-performance-of-climate-models-changed-over-30-years-of-model-development/113">discourse</a>).
 
 ## Setting up on the cloud
 
@@ -58,4 +58,4 @@ We will build off of (and hopefully contribute to) existing packages such as <a 
 
 [Zenodo](https://about.zenodo.org/) is a data archiving tool that can help make your project citable by assigning a DOI to the project's GitHub repository.
 
-Follow the guidelines here https://guides.github.com/activities/citable-code
+Follow the guidelines <a href="https://guides.github.com/activities/citable-code">here</a>.
