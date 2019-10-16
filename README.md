@@ -39,14 +39,14 @@ Monthly-mean values of a number of common variables for CMIP6 historical (e.g. 1
 
 Variables of interest (based on model skill metric in Reichler 2008):
 
-    sea level pressure
-    air temperature
-    2-m air temperature
-    zonal and meridional wind
-    precipitation
-    specific and/or relative humidity
-    snow fraction
-    sea ice fraction
+    sea level pressure (psl)
+    air temperature (ta)
+    2-m air temperature (tas)
+    zonal and meridional wind (ua, va, uas, vas)
+    precipitation (pr)
+    specific and/or relative humidity (hus, hur)
+    snow fraction (?)
+    sea ice fraction (sic or siconc)
 
 We currently are pulling CMIP6 from the <a href="https://pangeo-data.github.io/pangeo-datastore/">google cloud storage</a>, pre-CMIP model output from a restricted google cloud storage bucket (to be made publically available upon preprint publication), and ERA5 reanalysis data (as our 'observational' reference) from the <a href="https://cds.climate.copernicus.eu/#!/home">Copernicus Climate Data Store</a>.
 
