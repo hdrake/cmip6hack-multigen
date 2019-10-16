@@ -1,6 +1,6 @@
 # CMIP6 Hackathon - Multi-Generational Climate Model Inter-Comparison
 
-# Setting up on the cloud
+## Setting up on the cloud
 
 Go to <a href="https://ocean.pangeo.io">ocean.pangeo.io</a> and login with Globus using your Orcid ID (full instructions <a href="https://discourse.pangeo.io/t/using-ocean-pangeo-io-for-the-cmip6-hackathon/291">here</a>).
 
