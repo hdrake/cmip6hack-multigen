@@ -1,4 +1,4 @@
-# CMIP6 Hackathon - Multi-Generational Inter-Comparison of Climate Model Performance 
+# CMIP6 Hackathon - Multi-Generational Climate Model Inter-Comparison
 
 # Setting up 
 Once the initial setup is done, everyone will want to clone the repository onto the compute system they plan to use for the hackathon.
