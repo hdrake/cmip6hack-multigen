@@ -8,7 +8,7 @@ Next, clone the repository.
 
 1. Open a JupyterLab session on the system you plan to use.
 2. Open a terminal in the JupyterLab environment.
-3. Clone your project: `git clone https://github.com/username/cmip6hack-myproject.git`
+3. Clone your project: `git clone https://github.com/hdrake/cmip6hack-myproject.git`
 4. Get to work!
 
 ### How to make our citable (once there is enough for a release)
