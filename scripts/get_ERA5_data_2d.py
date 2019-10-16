@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import os
 import cdsapi
 
 c = cdsapi.Client()
 
+os.system("mkdir -p ../data/interim/reanalysis")
 c.retrieve(
     'reanalysis-era5-single-levels-monthly-means',
     {
