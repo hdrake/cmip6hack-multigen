@@ -1,13 +1,15 @@
 # CMIP6 Hackathon - Multi-Generational Climate Model Inter-Comparison
 
-# Setting up 
-Once the initial setup is done, everyone will want to clone the repository onto the compute system they plan to use for the hackathon.
+# Setting up on the cloud
+
+Go to <a href="https://ocean.pangeo.io">ocean.pangeo.io</a> and login with Globus using your Orcid ID (full instructions <a href="https://discourse.pangeo.io/t/using-ocean-pangeo-io-for-the-cmip6-hackathon/291">here</a>).
+
+Next, clone the repository.
 
 1. Open a JupyterLab session on the system you plan to use.
-1. Open a terminal in the JupyterLab environment.
-1. Clone your project: `git clone https://github.com/username/cmip6hack-myproject.git`
-1. Get to work!
-
+2. Open a terminal in the JupyterLab environment.
+3. Clone your project: `git clone https://github.com/username/cmip6hack-myproject.git`
+4. Get to work!
 
 ### How to make your the citable
 
