@@ -1,4 +1,5 @@
-# CMIP6 Hackathon - Multi-Generational Climate Model Inter-Comparison
+# CMIP6 Hackathon
+# Project: Multi-Generational Climate Model Inter-Comparison
 
 See below for project description (modified from <a href="https://discourse.pangeo.io/t/how-has-the-performance-of-climate-models-changed-over-30-years-of-model-development/113">discourse</a>).
 
