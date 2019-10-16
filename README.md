@@ -11,7 +11,7 @@ Next, clone the repository.
 3. Clone your project: `git clone https://github.com/username/cmip6hack-myproject.git`
 4. Get to work!
 
-### How to make your the citable
+### How to make our citable (once there is enough for a release)
 
 [Zenodo](https://about.zenodo.org/) is a data archiving tool that can help make your project citable by assigning a DOI to the project's GitHub repository.
 
