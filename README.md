@@ -54,7 +54,7 @@ We currently are pulling CMIP6 from the <a href="https://pangeo-data.github.io/p
 
 We will build off of (and hopefully contribute to) existing packages such as <a href="https://github.com/JiaweiZhuang/xESMF">`xESMF`</a> and <a href="https://github.com/raybellwaves/xskillscore">`xskillscore`</a> that leverage <a href="https://github.com/pydata/xarray">`xarray`</a> and already feature tools for handling model ensembles and computing model performance metrics. We will also make use of packages containing useful metadata, such as the <a href="https://github.com/mathause/regionmask">`regionalmask`</a> library of regional masks.
 
-### How to make our citable (once there is enough for a release)
+### How to make our work citable (once there is enough for a public release)
 
 [Zenodo](https://about.zenodo.org/) is a data archiving tool that can help make your project citable by assigning a DOI to the project's GitHub repository.
 
