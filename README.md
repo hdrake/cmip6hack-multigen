@@ -11,8 +11,10 @@ Next, clone the repository.
 
 1. Open a JupyterLab session on the system you plan to use.
 2. Open a terminal in the JupyterLab environment.
-3. Clone your project: `git clone https://github.com/hdrake/cmip6hack-myproject.git`
-4. Get to work!
+3. Clone the project: `git clone https://github.com/hdrake/cmip6hack-multigen.git`
+4. Navigate into the project folder with: `cd cmip6hack-multigen`
+5. Activate the `cmip6hack-multigen` environment by running `source spinup_env.sh`.
+6. Analyze the data interactively in the iPython jupyter notebooks in `/notebooks/` (do not forget to activate the `cmip6hack-multigen` kernel when you open a notebook!
 
 ## Project proposal
 
