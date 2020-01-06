@@ -1,0 +1,35 @@
+name: cmip6hack-multigen
+channels:
+  - conda-forge
+dependencies:
+  # Required for full project functionality (dont remove)
+  - pytest
+  # IDE
+  - jupyter
+  - jupyterlab
+  # I/O
+  - gcsfs 
+  - intake
+  - intake-esm
+  - netcdf4 
+  # Misc
+  - tqdm
+  # Numerics
+  - bottleneck
+  - dask
+  - numpy
+  - pandas
+  - scipy
+  - xarray=0.14.1
+  - xgcm
+  - xskillscore
+  # Regridding
+  - xesmf
+  - esmpy<=7.1.0
+  # Viz
+  - cartopy 
+  - matplotlib
+  - pip
+  - pip:
+    - proplot  # Awesome viz package.
+    - regionmask
