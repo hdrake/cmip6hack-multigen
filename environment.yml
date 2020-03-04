@@ -8,6 +8,7 @@ dependencies:
   - jupyter
   - jupyterlab
   # I/O
+  - cdsapi
   - gcsfs 
   - intake
   - intake-esm

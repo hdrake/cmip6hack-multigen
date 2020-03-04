@@ -5,5 +5,5 @@ Last run took about ~5 minutes to download 4.7 Gb of reanalysis data
 conda install -c conda-forge cdsapi
 
 ## Follow instructions at https://cds.climate.copernicus.eu/api-how-to to install the CDS API key at ~/.cdsapirc and then run:
-bash get_ERA5_data_2d.py
+python get_ERA5_data_2d.py
 

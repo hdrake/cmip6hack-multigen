@@ -13,8 +13,7 @@ c.retrieve(
         'format':'netcdf',
         'product_type':'monthly_averaged_reanalysis',
         'variable':[
-            '10m_u_component_of_wind','10m_v_component_of_wind','2m_temperature',
-            'mean_sea_level_pressure','total_precipitation'
+            'mean_sea_level_pressure', '2m_temperature', 'total_precipitation',
         ],
         'year':[
             '1979','1980','1981',
@@ -38,6 +37,7 @@ c.retrieve(
             '07','08','09',
             '10','11','12'
         ],
-        'time':'00:00'
+        'time':'00:00',
+        'format': 'netcdf',
     },
     '../data/interim/reanalysis/ERA5_mon_2d.nc')
