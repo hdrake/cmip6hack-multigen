@@ -1,7 +1,6 @@
 # CMIP6 Hackathon
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3697973.svg)](https://doi.org/10.5281/zenodo.3697973)
-
 # Project: Multi-Generational Climate Model Inter-Comparison
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3697973.svg)](https://doi.org/10.5281/zenodo.3697973)
 
 See below for project description (modified from <a href="https://discourse.pangeo.io/t/how-has-the-performance-of-climate-models-changed-over-30-years-of-model-development/113">discourse</a>).
 
