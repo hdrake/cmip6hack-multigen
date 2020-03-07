@@ -26,7 +26,8 @@ def get_ipcc_dataset(mip_ids = all_mip_ids):
     col_dict = get_ipcc_collection(mip_ids)
     return
 
-def load_ensembles(col_dict, varnames, mip_ids=all_mip_ids, timeslice=None):
+def load_ensembles(varnames, mip_ids=all_mip_ids, timeslice=None):
+    col_dict = get_ipcc_collection(mip_ids=mip_ids)
     ds_dict = load_col_as_dict(col_dict, varnames, timeslice=timeslice)
     ens_dict = model_dict_to_ensemble_dict(ds_dict, varnames)
     return ens_dict
@@ -51,7 +52,7 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
     for mip_id, col in tqdm(col_dict.items()):
         ds_dict[mip_id] = {}
         for varname in varnames:
-            print("Loaded: variable_id = ", varname, " from activity_id = ",mip_id)
+            print("Loaded: variable_id `", varname, "` from activity_id `",mip_id,"`")
             cat = col.search(
                 experiment_id='historical',
                 variable_id=varname,
