@@ -37,7 +37,7 @@ def regrid_to_common(ds, ds_out=ds_out):
 
 def calc_area(lat, lon, coarsen_size=1., dlat=1., dlon=1.):
     Rearth = 6.378E6   # radius of Earth in meters
-    if coarsen != 1.:
+    if coarsen_size != 1.:
         return (
         (np.deg2rad(dlat)*Rearth) * (np.deg2rad(dlon)*Rearth*np.cos(np.deg2rad(lat))) * xr.ones_like(lon)
         ).coarsen({'lat': coarsen_size, 'lon': coarsen_size}, boundary='exact').mean()
