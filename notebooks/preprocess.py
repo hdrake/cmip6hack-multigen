@@ -119,3 +119,22 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                 ds_dict[mip_id][varname][key] = ds_new  # add this to the dictionary
                 
     return ds_dict
+
+
+def load_era(path, timeslice=None, coarsen_size=2):
+    era_native = xr.open_dataset(path, chunks={'time': 1})
+
+    era_native = era_native.sel(time=timeslice).mean(dim='time', keep_attrs=True)
+    era_native = era_native.rename({'msl': 'psl', 't2m': 'tas', 'tp':'pr', 'latitude':'lat', 'longitude':'lon'})
+
+    # convert from "m of water per day" to "kg m^-2 s^-1"
+    # See https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation for details
+    era_native['pr'] *= 1000./(24.*60.*60.)
+
+    with util.HiddenPrints():
+        era = util.regrid_to_common(era_native)
+    era.attrs.update(era_native.attrs)
+
+    era = era.coarsen({'lat':coarsen_size, 'lon': coarsen_size}, boundary='exact').mean()
+
+    return era
