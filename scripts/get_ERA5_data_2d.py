@@ -6,7 +6,7 @@ import cdsapi
 
 c = cdsapi.Client()
 
-os.system("mkdir -p ../data/interim/reanalysis")
+os.system("mkdir -p ../data/raw/reanalysis")
 c.retrieve(
     'reanalysis-era5-single-levels-monthly-means',
     {
@@ -40,4 +40,4 @@ c.retrieve(
         'time':'00:00',
         'format': 'netcdf',
     },
-    '../data/interim/reanalysis/ERA5_mon_2d.nc')
+    '../data/raw/reanalysis/ERA5_mon_2d.nc')
