@@ -1,0 +1,321 @@
+\documentclass{article}
+\usepackage[margin=0.6in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[sort&compress]{natbib}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{lineno}
+\usepackage{float}
+\usepackage{gensymb}
+\usepackage{appendix}
+\linenumbers
+
+\setlength\parindent{0pt}
+\renewcommand{\baselinestretch}{1.5}
+
+\newcommand{\TODO}[1]{\todo[inline,backgroundcolor=red!25,bordercolor=red]{#1}}
+\newcommand{\riley}[2][]{\todo[color=red, #1]{\textbf{Riley}: #2}}
+\newcommand{\henri}[2][]{\todo[color=orange, #1]{\textbf{Henri}: #2}}
+\newcommand{\ari}[2][]{\todo[color=blue, #1]{\textbf{Ari}: #2}}
+\newcommand{\brian}[2][]{\todo[color=teal, #1]{\textbf{Brian}: #2}}
+\usepackage[obeyFinal,textsize=footnotesize]{todonotes}
+
+\brian{hello}
+
+\usepackage{authblk}
+
+\title{Optimal time-dependent deployments of climate controls}
+\author[1,2]{Henri F. Drake\textsuperscript{*}}
+\author[3]{Brian Rose}
+\author[4]{Arianna Varuolo-Clarke}
+\author[5]{Riley X. Brady}
+\affil[1]{Massachusetts Institute of Technology, Cambridge, MA, USA}
+\affil[2]{Woods Hole Oceanographic Institution, Woods Hole, MA, USA}
+\affil[3]{}
+\affil[4]{}
+\affil[5]{}
+
+\date{}             %% if you don't need date to appear
+\setcounter{Maxaffil}{0}
+\renewcommand\Affilfont{\itshape\small}
+
+\begin{document}
+\maketitle
+
+\section{Background and motivation}
+
+\begin{figure}[htb!]
+\noindent\includegraphics[width=1.0\textwidth]{figures/}
+\centering
+\caption{}
+\label{fig.temp_and_carbon}
+\end{figure}
+
+\subsection{Temperature response to CO$_{2}$ forcing}
+The evolution of the global-mean near-surface temperature anomaly (relative to the initial time $t_{0} = \SI{2020}{CE}$) is determined by the two-box linear energy balance model \citep[e.g][]{gregory_vertical_2000, held_probing_2010}:
+\begin{gather}
+    C_{U} \dv{T}{t} = -B T - \kappa( T - T_{D}) + F(t), \label{eq.upper_ocean}
+    \\
+    C_{D} \dv{T_{D}}{t} = \kappa (T - T_{D}),\label{eq.deep_ocean}
+\end{gather}
+where (\ref{eq.upper_ocean}) represents the upper ocean with average temperature anomaly $T$, and (\ref{eq.deep_ocean}) represents the deep ocean with an average temperature $T_{D}$. The near-surface atmosphere exchanges heat rapidly with the upper ocean and thus the global-mean near-surface air temperature is also given by $T$. The model parameters are: the upper ocean heat capacity $C_{U}$ (including a negligible contribution $C_{A} \ll C_{U}$ from the atmosphere); the deep ocean heat capacity $C_{D}$; the climate feedback parameter $B$; the ocean mixing rate $\kappa$; and $F(t)$ the anomalous anthropogenic radiative forcing. The radiative forcing and temperature anomalies at $t_{0} = \SI{2020}{CE}$ relative to preindustrial are $F(t_{0}) - F(t_{\text{pre}}) = \SI{2.5}{W\, m^{-2}}$ and $T_{0} \equiv T(t_{0}) - T(t_{\text{pre}}) = \SI{1.1}{K}$, where we set $F_{0} \equiv F(t_{0}) = \SI{0}{W\, m^{-2}}$ and $T(t_{\text{pre}}) = \SI{0}{K}$ for convenience.
+
+Since, by construction, the anthropogenic forcing $F(t)$ varies on timescales longer than the fast relaxation timescale $\tau_{U} = C_{U}/(B + \kappa)$, we can ignore the time-dependence in the upper ocean and approximate
+\begin{equation}
+    T \approx \frac{F+\kappa T_{D}}{B + \kappa},
+    \label{eq.shallow_approx}
+\end{equation}
+where the evolution of the deep ocean
+\begin{equation}
+    C_{D} \dv{T_{D}}{t} \approx - \frac{B \kappa}{B + \kappa} T_{D} + \frac{\kappa}{B + \kappa} F
+    \label{eq.deep_ode}
+\end{equation}
+occurs on a slower timescale $\tau_{D} \equiv \dfrac{C_{D}}{B} \dfrac{B + \kappa}{\kappa}$ \citep{held_probing_2010}. Plugging the exact solution to (\ref{eq.deep_ode}) into (\ref{eq.shallow_approx}) gives the integral solution
+\begin{equation}
+    T(t) - T_{0} = \frac{F(t)}{B + \kappa} + \frac{\kappa}{B} \frac{1}{(B+\kappa)} \int_{t_{0}}^{t} \frac{ e^{-(t-t')/\tau_{D}}}{\tau_{D}} F(t') \, \text{d}t'.\label{eq.baseline_temperature}
+\end{equation}
+The evolution of the controlled temperature anomaly (Figure \ref{fig.temp_and_carbon}c)
+\begin{equation}
+    T_{M,R,G}(t) - T_{0} =  \frac{F_{M,R,G}(t)}{B + \kappa} + \frac{\kappa}{B} \frac{1}{(B+\kappa)} \int_{t_{0}}^{t} \frac{ e^{-(t-t')/\tau_{D}}}{\tau_{D}} F_{M,R,G}(t') \, \text{d}t'\label{eq.temperature}
+\end{equation}
+is thus driven by the controlled net radiative forcing $F_{M,R,G}$.
+
+We identify the first term on the right hand side of (\ref{eq.baseline_temperature}) and (\ref{eq.temperature}) as the transient climate response \citep{gregory_transient_2008}, which dominates for $t-t_{0} \ll \tau_{D}$, while the second term is a slower ``recalcitrant" response due to a weakening of ocean heat uptake as the deep ocean comes to equilibrium with the transiently warmer upper ocean \citep{held_probing_2010}. While the contribution of the recalcitrant component to historical warming is thought to be small, it contributes significantly to 21st century and future warming \citep{gregory_transient_2008,held_probing_2010}. If the instantaneous radiative forcing vanishes, as in the case of either complete decarbonization or strong solar geoengineering, the recalcitrant component is the only remaining cause of temperature change (Figure \ref{fig.temp_and_carbon}c, see also \citealt{gregory_transient_2008, held_probing_2010}).
+
+The behavior of the model on short and long timescales is illustrated by applying it to the canonical climate change experiment in which CO$_{2}$ concentrations increase at 1\% per year until doubling. The temperature anomaly first rapidly increases until it reaches the Transient Climate Sensitivity $TCS = \dfrac{F_{2\times}}{B + \kappa}$ around the time of doubling $t=t_{2\times}$, with $t_{2\times} - t_{0} \ll \tau_{D}$ and $F_{2\times} = \alpha \ln(2)$, and then gradually asymptotes to the Equilibrium Climate Sensitivity $ECS = \dfrac{F_{2\times}}{B} > TCS$ on a much longer timescale $t-t_{0} \gg \tau_{D}$.
+
+\subsection{Climate damages}
+
+Annual climate damages are assumed to be of the quadratic form $D(t) = \beta T(t)^{2}$, such that successive temperature increases are increasingly damaging, based on empirical estimates of damages which range from linear to cubic functions of global-mean temperature change relative to preindustrial \citep{stern_economics_2007}. The default value of the damage parameter $\beta$ is chosen to be roughly similar to the DICE model for low levels of warming \citep{nordhaus2013dice}, resulting in damages of 2\% of global world product at \SI{2}{\celsius}.
+
+\textbf{A}daptation to climate change impacts (e.g. building sea walls, installing air conditioning units, planting climate-resilient crops) is parameterized by reducing annual damages by a fraction $A(t) \in [0,1]$, such that the total controlled damages are:
+\begin{equation}
+    D_{M, R, G, A} = \beta \; (T_{M, R, G}(t))^{2} \; (1-A(t)).
+\end{equation}
+Although adaptation does not affect the planetary temperature directly, it is useful to consider an ``adapted temperature" $T_{M,R,G,A}$ which yields damages equivalent to the fully-controlled damages $\beta (T_{M,R,G,A})^{2} = \beta (T_{M,R,G})^{2} (1-A)$, given by
+\begin{equation}
+    T_{M,R,G,A} \equiv T_{M,R,G} \sqrt{(1-A)}.\label{eq.adapted_temperature}
+\end{equation}
+In Figure \ref{fig.temp_and_carbon}, for example, while the controlled temperature $T_{M,R,G}$ overshoots the $\SI{2}{\celsius}$ warming threshold, the ``adapted temperature" $T_{M,R,G,A}$ remains below the threshold.
+
+\subsection{Control costs}
+
+The annual costs of deploying climate controls is given by
+\begin{equation}
+    \mathcal{C}_{M, R, G, A}(t) = \sum_{\alpha \in \mathcal{A}} \mathcal{C}_{\alpha} f^{(\alpha)}(\alpha(t)),
+\end{equation}
+where $\mathcal{A} = \{M, R, G, A \}$ is the set of climate controls, $\mathcal{C}_{\alpha}$ is the reference cost of each climate control, and $f^{(\alpha)}(\alpha)$ is a function that determines how the deployment cost increases as a function of fractional deployment. The reference cost $\mathcal{C}_{\alpha}$ corresponds to the hypothetical cost of full deployment of that control (e.g. $\mathcal{C}_{M}$ is the cost of fully decarbonizing society). However, the reference costs may be more usefully tuned based on a smaller deployment threshold, for which costs estimates are likely to be more accurate and reflective of plausible near-future deployment fractions.
+
+We will here assume the reference costs of mitigation $\mathcal{C}_{M}$, removal $\mathcal{C}_{R}$, and adaptation $\mathcal{C}_{A}$ are fixed in time and reflect the required investments in abatement measures. In contrast, the reference cost of geoengineering $\mathcal{C}_{G}$ is thought to be dominated by the damages due to unintended side effects rather than the direct investment in deployment and thus scales with the time-dependent global economy: $\mathcal{C}_{G}(t) = \tilde{\mathcal{C}}_{G} E(t)$, where $E(t) = E_{0}(1 + \gamma)^{(t-t_{0})}$ is the Gross World Product (GWP), determined by a fixed exogenous economic growth rate $\gamma$; and  $\tilde{\mathcal{C}}_{G}$ is the damage due to deploying $F(t \rightarrow \infty) = \SI{8.5}{W m^{-2}}$ worth of solar radiation management, as a fraction of the GWP.
+
+We do not include learning effects beyond their possible influence in setting the shape of the deployment cost functions $f^{(\alpha)}(\alpha) = \alpha^{p_{\alpha}}$, but they could be included explicitly in the future. Here, we will focus on the medium deployment cost scenario $f(\alpha) = \alpha^{2}$ ($p_{\alpha} = 2$ for all $\alpha \in \mathcal{A}$), which has the following interpretable properties: 
+\begin{itemize}
+    \item $\left. \dv{f}{\alpha}\right|_{\alpha=0} = 0$ (initial marginal deployment is effectively free)
+    \item $f(1) = 1$ (full deployment costs $\mathcal{C}_{\alpha}$), and
+    \item $\dv[2]{f}{\alpha} > 0$ (convex, such that deployment gets progressively more and more expensive).
+\end{itemize}
+
+\subsection{Optimization Methods}
+
+We use the Interior Point Optimizer (\href{https://github.com/coin-or/Ipopt}{https://github.com/coin-or/Ipopt}), an open source software package for large-scale nonlinear optimization, to minimize the various objective functions subject to assumed policy constraints, as described in Section \ref{sec.policy_frameworks}. In practice, the control variables $\alpha \in \mathcal{A} = \{ M, R, G, A\}$ are discretized into $N = (t_{f} - t_{0}) / \Delta t$ timesteps (default $\Delta t = \SI{5}{years}$) resulting in an $4N$-dimensional optimization problem. In the default (deterministic and convex) configuration, the model takes only $\mathcal{O}(\SI{10}{ms})$ to solve after just-in-time compiling and effectively provides user feedback in real time, making it amenable to our forthcoming interactive web application (e.g. following the lead of the impactful \href{https://en-roads.climateinteractive.org/scenario.html?v=2.7.11}{En-ROADS} model, \citealt{siegel2018roads}).
+
+\section{Climate change policy frameworks}\label{sec.policy_frameworks}
+
+In contrast to conventional Integrated Assessment Models, which follow classic economic theories of optimal economic growth and solve for the maximal welfare based on the discounted utility of consumption, we here treat economic growth as exogenous (ignoring economy-policy-climate feedbacks) and simply aim to minimize the costs– and maximize the benefits– of deploying climate change controls, subject to constraints from policy goals.
+
+In Section \ref{sec.cost_benefit}, we describe a cost-benefit analysis approach which finds the trajectories of control deployments that optimize trade-offs between the costs of deploying climate controls and the benefit of avoiding climate damages due to these controls. The cost-benefit approach depends strongly on the magnitude of the poorly-constrained damage function $D(T)$, which is thought to be under-estimated by conventional bottom-up approaches \citep{ackerman_limitations_2009}. Thus, in Section \ref{sec.cost-effectivness} we also explore an alternative scenario in which we instead impose an upper bound on permissible climate damages, or temperatures (as in the 2015 United Nations Paris Agreement on Climate Change), and find the lowest cost climate control trajectories which still satisfy this constraint.
+
+\paragraph{Policy and technology readiness constraints.} For each control $\alpha \in \mathcal{A} = \{ M, R, G, A\}$, we assert a maximum deployment rate
+\begin{equation}
+    \abs{\dv{\alpha}{t}} \le \dot{\alpha},
+\end{equation}
+to forbid implausibly aggressive deployment scenarios, and an initial or readiness condition
+\begin{equation}
+    \alpha(t < t_{\alpha}) = \alpha_{0},
+\end{equation} where typically $\alpha_{0} = 0$ and $t_{\alpha} \ge t_{0}$ is the earliest time at which the control is ``ready" to be deployed. In particular, in the default configuration we set $t_{R} = 2030$ CE and $t_{G} = 2050$ CE because these socio-technological systems do not yet exist at a climatically-significant scale \citep{minx_negative_2018, flegal_solar_2019}. Additionally, we interpret adaptation deployment costs as buying insurance against future damages at a fixed annual rate $\mathcal{C}_{A} f^{(A)}(A)$, with $\dot{A} = 0$, which can be increased or decreased upon re-evaluation at a later date (see Section \ref{sec.reactive}).
+
+\paragraph{Discount rates.} A common economic assumption is that society discounts future costs and benefits relative to the present by a multiplicative discount factor $(1 + \rho)^{-(t-t_{0})}$, determined by the utility discount rate $\rho$ \citep[e.g. see reviews in][]{broome_discounting_1994, stern_economics_2007}. Ethical justifications for applying a non-zero discount rate to the multi-generational timescales of climate change are unconvincing and controversial even among economists \citep{ramsey_mathematical_1928, solow_economics_1974, stern_economics_2007}. Here we choose a discount rate of $\rho = 1\%$, on the low end of values used in literature, in the spirit of inter-generational equity\footnote{Following \cite{stern_economics_2007}'s discussion of the discount rate $\rho = \eta \frac{\dot{c}}{c} + \delta$, we argue against the use of a \textit{social discount rate} on ethical terms \citep{ramsey_mathematical_1928, solow_economics_1974}, setting $\eta \frac{\dot{c}}{c}=0$, and argue that the \textit{pure time discount rate}, the time decay rate of the probability that society exists, is small $\delta \approx 0$, such that $\rho \approx 0$. We note that while a discount rate of zero introduces a sensitivity to the length of the time period considered, the conventional use of discount rates results in an even more absurd assertion that future generations are worthless.}. 
+%In Section \ref{sec.discount_rates}, we consider the sensitivity of our results to the choice of the discount rate $\rho$ and focus on the ratio $\rho / \gamma$ between the discount rate and the economic growth rate.
+
+\subsection{Approach 1: Cost-benefit analysis}\label{sec.cost_benefit}
+
+Here, we interpret the cost $\mathcal{C}$ of climate change as the cost of deploying climate controls to reduce climate damages while the benefits $\mathcal{B}$ are the avoided climate damages. A straight-forward solution of the cost-benefit problem is thus to minimize the difference between the time-integrated (potentially discounted) costs and benefits:
+\begin{gather}
+    \min \left\{ \int_{t_{0}}^{t_{f}} 
+    \left(\mathcal{C}_{M, R, G, A} - \mathcal{B}_{M, R, G, A}\right) (1 + \rho)^{-(t-t_{0})} \, \text{d}t \right\}.
+\end{gather}
+The results of optimizing for net benefits are shown in Figure \ref{fig.approach1}. Early and aggressive emissions mitigation– and to a lesser extent carbon dioxide removal (Fig \ref{fig.approach1}a)– carry net costs of up to 750 billion USD/year relative to the baseline but deliver an order of magnitude more in benefits from 2070 to 2200 (Fig \ref{fig.approach1}b).
+
+\begin{figure}[htb!]
+\noindent\includegraphics[width=1.0\textwidth]{figures/default-benefits_controls_and_benefits.png}
+\centering
+\caption{a) Optimal control deployments in a net benefit-maximizing framework and b) corresponding costs and benefits relative to a no-climate-policy baseline scenario. The total positive area shaded in grey in b) is the maximal time-integrated net benefits produced by the model.}
+\label{fig.approach1}
+\end{figure}
+
+\subsection{Approach 2: Cost-effectivness of avoiding damage or temperature thresholds}\label{sec.cost-effectivness}
+
+Coming soon (see Figure \ref{fig.approach2}).
+
+
+\begin{figure}[htb!]
+\noindent\includegraphics[width=1.0\textwidth]{figures/default-temp_controls_and_damages.png}
+\centering
+\caption{a) Optimal control deployments in a net cost-effectiveness framework and b) corresponding costs and damages. The total positive area shaded in red in b) is the minimal time-integrated controls costs produced by the model.}
+\label{fig.approach2}
+\end{figure}
+
+\subsection{Designing reactive climate policy for an uncertain future}\label{sec.reactive}
+
+Coming soon.
+
+\section{Qualitative model results}
+
+\subsection{Extreme sensitivity to subjectively-chosen discount rates}
+% \subsection{Multiple climate controls are better than one}
+
+% \subsection{Uncertainty in climate damages strengthens the case for early action}
+
+% \subsection{Optimal policy is as arbitrary as the discount rate}
+
+\section{Discussion}
+
+Coming soon.
+
+
+\appendix
+\appendixpage
+\addappheadtotoc
+
+%\section{Comprehensive formulation of optimization problems}
+
+\section{Justification and interpretation of free parameter values}\label{sec.parameters}
+
+\subsection{Physical climate parameters}
+The temperature anomaly in $t_{0}=2020$ relative to pre-industrial is roughly $T_{0} = \SI{1.1}{\celsius}$, as estimated from a global network of in-situ thermometers \citep{lenssen_improvements_2019, nasagisstemp}.
+
+Present day CO$_{2e}(t_{0})$
+
+The free parameters in the two-box energy balance model are set by the multi-model mean values diagnosed from the CMIP5 ensemble of general circulation climate models by \cite{Geoffr} (Tables 3 and 4). They are: the deep ocean heat capacity $C_{D} (\equiv C_{0}$), the heat exchange coefficient $\kappa (\equiv \gamma)$, and the feedback parameter $B (\equiv \lambda)$. These values are more easily interpreted with the following diagnostic variables: the Transient Climate Sensivity $TCS = \Delta F_{2\times}/(B + \kappa)$, the warming that arises shortly after a doubling of CO$_{2}$ concentrations; the Equilibrium Climate Sensitivity $ECS = \Delta F_{2\times}/B$, the equilibrium temperature anomaly due to a doubling of CO$_{2}$ concentrations, and the ocean heat uptake timescale $\tau_{D}$ which controls the asymptotic approach to the equilibrium temperature.
+
+\subsection{Economic model parameters}
+
+We base our reference cost for adaptation  $\mathcal{C}_{A}$ on \cite{agr2018}, which estimates annual adaptation costs of $\SI{0.5e12}{\$\, yr^{-1}}$ by 2050. They state this is likely an underestimate due to the omission of certain sectors and so set our reference cost to twice their estimate. In the face of habitability limits \citep[e.g.][]{sherwood_adaptability_2010} and exorbitant adaptation costs at high levels of warming, some unknown fraction of climate damages cannot be avoided by adaptation \citep{chambwera2014economics}; here, we impose this constraint by setting $0 \le A \le 1/3$.
+
+\subsection{Policy action parameters}
+\begin{table}[t]
+\begin{center}
+ \begin{tabular}{|| c || c ||}
+ \hline
+ Parameter & Default Configuration \\ [0.5ex] 
+ \hline\hline
+ $t_{0}$ & 2020 CE \\
+ \hline
+ $t_{f}$ & 2200 CE \\
+ \hline
+ $\Delta t$ & \SI{5}{yr} \\
+ \hline
+ $c_{0}$ & \SI{460}{ppm} \\ 
+ \hline
+ a & \SI{4.97}{W m^{-2}}\\
+ \hline
+ $q(t)$ & See eq. (\ref{eq.baseline_emissions}) \\
+ \hline
+ $r$ & $40\%$ \\
+ \hline
+ $T_{0}$ & \SI{1.1}{K} \\
+ \hline
+ $B$ & \SI{1.13}{W\, m^{-2}\, K^{-1}} \\
+ \hline
+ $\kappa$ & \SI{0.72}{W\, m^{-2}\, K^{-1}} \\
+ \hline
+ $C_{D}$ & \SI{106}{W\, yr\, m^{-2}\, K^{-1}} \\
+ \hline
+ $\beta$ & \SI{0.22e12}{\$\, yr^{-1}\, K^{-2}} \\
+ \hline
+ $\rho$ & $0\%$ \\
+ \hline
+ $E_{0}$ & \SI{100e12}{\$\, yr^{-1}}\\
+ \hline
+ $\gamma$ & $2\%$ \\
+ \hline\hline
+ \end{tabular}
+\end{center}
+\caption{}
+\label{tab.parameters}
+\end{table}
+
+% Control parameter table
+\begin{table}[t]
+\begin{center}
+ \begin{tabular}{|| c || c ||}
+ \hline
+ Parameter & Default Configuration \\ [0.5ex] 
+ \hline\hline
+ $M$ & $0 \le M \le 1$ \\
+ \hline
+ $A$ & $0 \le A \le 1/3$ \\
+ \hline
+ $R$ & $0 \le R \le 1$ \\
+ \hline
+ $G$ & $0 \le G \le 1$ \\
+ \hline
+ $\dot{M}$ & \SI{1/20}{yr^{-1}} \\
+ \hline 
+ $\dot{A}$ & \SI{0}{yr^{-1}} \\
+ \hline 
+ $\dot{R}$ & \SI{1/20}{yr^{-1}} \\
+ \hline 
+ $\dot{G}$ & \SI{1/20}{yr^{-1}} \\
+ \hline 
+ $t_{M}$ & $2020$ CE \\
+ \hline
+ $t_{A}$ & $2020$ CE \\
+ \hline
+ $t_{R}$ & $2030$ CE \\
+ \hline
+ $t_{G}$ & $2050$ CE \\
+ \hline
+ $M_{0}$ & $1/6$ \\
+ \hline
+ $A_{0}$ & $0$ \\
+ \hline
+ $R_{0}$ & $0$ \\
+ \hline
+ $G_{0}$ & $0$ \\
+ \hline
+ \hline
+ \hline
+ $\mathcal{C}_{M}$ & \SI{2e12}{\$\, yr^{-1}} \\
+ \hline
+ $\mathcal{C}_{A}$ & \SI{1e12}{\$\, yr^{-1}} \\
+ \hline
+ $\mathcal{C}_{R}$ & \SI{8.3e12}{\$\, yr^{-1}} \\
+ \hline
+ $\tilde{\mathcal{C}}_{G}$ & \SI{4.6}{\percent} \\ 
+ \hline
+ $p_{M}$ & $2$ \\
+ \hline
+ $p_{A}$ & $2$ \\
+ \hline
+ $p_{G}$ & $2$ \\
+ \hline\hline
+\end{tabular}
+\end{center}
+\caption{Values of parameters governing control variable constraints (above separation) and deployment costs (below separation).}
+\label{tab.controls}
+\end{table}
+
+\bibliographystyle{apalike}
+%\bibliographystyle{unsrtnat}
+\bibliography{references.bib, refs_by_hand.bib}
+
+\end{document}
