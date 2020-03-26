@@ -62,6 +62,10 @@ def vec_dt_replace(series, year=None, month=None, day=None):
 def add_ens_mean(ens_dict):
     for mip_id, ens in ens_dict.items():
         ensmean = ens.mean(dim='ensemble', skipna=True)
+        ensmean = ensmean.assign_coords({
+            'source_id': 'All',
+            'member_id': 'All'
+        })
         ens = xr.concat([ensmean.expand_dims({'ensemble': np.array(['ens-mean'])}), ens], dim='ensemble')
         ens.attrs['name'] = mip_id
         ens_dict[mip_id] = ens
