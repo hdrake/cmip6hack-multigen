@@ -32,7 +32,7 @@ def regrid_to_common(ds, ds_out=ds_out):
     """
     Regrid from rectilinear grid to common grid
     """
-    regridder = xe.Regridder(ds, ds_out, 'bilinear',periodic=True, reuse_weights=True)
+    regridder = xe.Regridder(ds, ds_out, 'bilinear', periodic=True, reuse_weights=True)
     return regridder(ds)
 
 def calc_area(lat, lon, coarsen_size=1., dlat=1., dlon=1.):

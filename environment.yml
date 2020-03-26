@@ -12,7 +12,8 @@ dependencies:
   - gcsfs 
   - intake
   - intake-esm
-  - netcdf4 
+  - netcdf4
+  - zarr
   # Misc
   - tqdm
   # Numerics
