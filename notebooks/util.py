@@ -32,7 +32,7 @@ def regrid_to_common(ds, ds_out=ds_out):
     """
     Regrid from rectilinear grid to common grid
     """
-    regridder = xe.Regridder(ds, ds_out, 'bilinear',periodic=True, reuse_weights=True)
+    regridder = xe.Regridder(ds, ds_out, 'bilinear', periodic=True, reuse_weights=True)
     return regridder(ds)
 
 def calc_area(lat, lon, coarsen_size=1., dlat=1., dlon=1.):
@@ -62,6 +62,10 @@ def vec_dt_replace(series, year=None, month=None, day=None):
 def add_ens_mean(ens_dict):
     for mip_id, ens in ens_dict.items():
         ensmean = ens.mean(dim='ensemble', skipna=True)
+        ensmean = ensmean.assign_coords({
+            'source_id': 'All',
+            'member_id': 'All'
+        })
         ens = xr.concat([ensmean.expand_dims({'ensemble': np.array(['ens-mean'])}), ens], dim='ensemble')
         ens.attrs['name'] = mip_id
         ens_dict[mip_id] = ens

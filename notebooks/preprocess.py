@@ -56,7 +56,6 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
             cat = col.search(
                 experiment_id='historical',
                 variable_id=varname,
-                member_id='r1i1p1f1',# choose first ensemble member only (for now)
                 table_id='Amon'
             )
 
@@ -64,6 +63,7 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
 
             with util.HiddenPrints():
                 dset_dict = cat.to_dataset_dict(
+                    aggregate=False,
                     zarr_kwargs={'consolidated': True, 'decode_times': False}
                 )
 
@@ -72,7 +72,7 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                 # rename spatial dimensions if necessary
                 if ('longitude' in ds.dims) and ('latitude' in ds.dims):
                     ds = ds.rename({'longitude':'lon', 'latitude': 'lat'})
-                    
+
                 # Need this temporarily because setting 'decode_times': True is broken
                 ds = xr.decode_cf(ds)
                 ds['time'] = ds['time'].astype('<M8[ns]')
@@ -81,22 +81,26 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                         util.vec_dt_replace(pd.Series(ds['time'].values), day=1.)
                     )
                 )
-                
+
                 repeats = len(ds['time']) - len(np.unique(ds['time']))
                 if repeats != 0:
                     print(f"Skip {key} before datetime conflict.")
                     continue
-                
+
                 ds = ds.squeeze() # get rid of member_id (for now)
 
                 chunks = {'lat':ds['lat'].size, 'lon':ds['lon'].size, 'time':30}
                 ds = ds.chunk(chunks)
-                
+
                 if timeslice is not None:
                     ds = ds.sel(time=timeslice)
 
                 with util.HiddenPrints():
-                    ds_new = util.regrid_to_common(ds[varname])
+                    try:
+                        ds_new = util.regrid_to_common(ds[varname])
+                    except:
+                        print(f"Skip {key} due to regridding conflict.")
+                        continue
 
                 ds_new.attrs.update(ds.attrs)
                 ds_new = qc.quality_control(ds_new, varname, key, mip_id)
@@ -107,19 +111,24 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                     if coord not in ['lat', 'lon', 'time']:
                         ds_new = ds_new.drop(coord)
 
+                member_id = key.split(".")[4]
                 ds_new = ds_new.expand_dims(
-                    {'ensemble': np.array([ds_new.attrs['name']])}, 0
+                    {'ensemble': np.array([ds_new.attrs['name'] + "-" + member_id])}, 0
                 )
+
+                ds_new = ds_new.assign_coords({
+                    'member_id': member_id,
+                    'source_id': key.split(".")[2],
+                    'mip_id': key.split(".")[0]
+                })
 
                 ds_new.attrs['mip_id'] = mip_id
 
                 coarsen_dict = {'lat': coarsen_size, 'lon': coarsen_size}
                 ds_new = ds_new.coarsen(coarsen_dict, boundary='exact').mean()
-                
-                ds_dict[mip_id][varname][key] = ds_new  # add this to the dictionary
-                
-    return ds_dict
 
+                ds_dict[mip_id][varname][key] = ds_new  # add this to the dictionary
+    return ds_dict
 
 def load_era(path, timeslice=None, coarsen_size=2):
     era_native = xr.open_dataset(path, chunks={'time': 1})
