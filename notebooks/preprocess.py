@@ -134,9 +134,9 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
     return ds_dict
 
 def load_era(path, timeslice=None, coarsen_size=2):
-    era_native = xr.open_dataset(path, chunks={'time': 1})
+    era_native = xr.open_dataset(path, chunks={'time': -1})
 
-    era_native = era_native.sel(time=timeslice).mean(dim='time', keep_attrs=True)
+    era_native = era_native.sel(time=timeslice)
     era_native = era_native.rename({'msl': 'psl', 't2m': 'tas', 'tp':'pr', 'latitude':'lat', 'longitude':'lon'})
 
     # convert from "m of water per day" to "kg m^-2 s^-1"
