@@ -93,7 +93,10 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                 ds = ds.chunk(chunks)
 
                 if timeslice is not None:
-                    ds = ds.sel(time=timeslice)
+                    try:
+                        ds = ds.sel(time=timeslice)
+                    except:
+                        print(f"Skip {key} due to timesclicing error.")
 
                 with util.HiddenPrints():
                     try:
