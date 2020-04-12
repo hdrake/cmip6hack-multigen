@@ -150,3 +150,4 @@ def load_era(path, timeslice=None, coarsen_size=2):
     era = era.coarsen({'lat':coarsen_size, 'lon': coarsen_size}, boundary='exact').mean()
 
     return era
+

@@ -166,8 +166,8 @@ def compute_derived_variables(ds):
     
     gb = ds.groupby("time.month")
     
-    clim = gb.mean(dim='time', skipna=True).compute()
-    anom = (gb - clim).compute()
-    ann = anom.groupby('time.year').mean('time', skipna=True).compute()
+    clim = gb.mean(dim='time', skipna=True)
+    anom = gb - clim
+    ann = anom.groupby('time.year').mean('time', skipna=True)
     
     return clim, anom, ann
