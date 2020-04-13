@@ -1,0 +1,23 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "ensemble",
+        "lat",
+        "lon"
+    ],
+    "activity_id": "CMIP",
+    "coordinates": "member_id source_id mip_id",
+    "experiment_id": "historical",
+    "external_variables": "areacella",
+    "mip_era": "CMIP6",
+    "mip_id": "cmip6",
+    "parent_activity_id": "CMIP",
+    "parent_experiment_id": "piControl",
+    "parent_mip_era": "CMIP6",
+    "product": "model-output",
+    "realm": "atmos",
+    "regrid_method": "bilinear",
+    "sub_experiment": "none",
+    "sub_experiment_id": "none",
+    "table_id": "Amon",
+    "variable_id": "tas"
+}
