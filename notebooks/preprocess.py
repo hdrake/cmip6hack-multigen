@@ -97,6 +97,7 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                         ds = ds.sel(time=timeslice)
                     except:
                         print(f"Skip {key} due to timesclicing error.")
+                        continue
 
                 with util.HiddenPrints():
                     try:
