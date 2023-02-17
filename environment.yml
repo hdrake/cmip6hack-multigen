@@ -25,6 +25,7 @@ dependencies:
   - xarray=0.14.1
   - xgcm
   - xskillscore
+  - eofs
   # Regridding
   - xesmf
   - esmpy<=7.1.0

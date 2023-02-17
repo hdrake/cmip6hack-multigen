@@ -61,11 +61,11 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
 
             if cat.df.size == 0: continue
 
-            with util.HiddenPrints():
-                dset_dict = cat.to_dataset_dict(
-                    aggregate=False,
-                    zarr_kwargs={'consolidated': True, 'decode_times': False}
-                )
+
+            dset_dict = cat.to_dataset_dict(
+                aggregate=False,
+                zarr_kwargs={'consolidated': True, 'decode_times': False}
+            )
 
             ds_dict[mip_id][varname] = {}
             for key, ds in dset_dict.items():
@@ -73,14 +73,18 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                 if ('longitude' in ds.dims) and ('latitude' in ds.dims):
                     ds = ds.rename({'longitude':'lon', 'latitude': 'lat'})
 
+                if ('lon' not in ds.dims) and ('lat' not in ds.dims):
+                    print(f"Skip {key} due to unclear spatial dimensions: {ds.dims}.")
+                    continue
+                    
                 # Need this temporarily because setting 'decode_times': True is broken
                 ds = xr.decode_cf(ds)
                 ds['time'] = ds['time'].astype('<M8[ns]')
-                ds['time'].values = np.array(
+                ds = ds.assign_coords({'time': np.array(
                     pd.to_datetime(
                         util.vec_dt_replace(pd.Series(ds['time'].values), day=1.)
                     )
-                )
+                    )})
 
                 repeats = len(ds['time']) - len(np.unique(ds['time']))
                 if repeats != 0:
@@ -97,13 +101,13 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                         ds = ds.sel(time=timeslice)
                     except:
                         print(f"Skip {key} due to timesclicing error.")
-
-                with util.HiddenPrints():
-                    try:
-                        ds_new = util.regrid_to_common(ds[varname])
-                    except:
-                        print(f"Skip {key} due to regridding conflict.")
                         continue
+
+                try:
+                    ds_new = util.regrid_to_common(ds[[varname]])[varname]
+                except:
+                    print(f"Skip {key} due to regridding conflict.")
+                    continue
 
                 ds_new.attrs.update(ds.attrs)
                 ds_new = qc.quality_control(ds_new, varname, key, mip_id)
@@ -134,19 +138,19 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
     return ds_dict
 
 def load_era(path, timeslice=None, coarsen_size=2):
-    era_native = xr.open_dataset(path, chunks={'time': 1})
+    era_native = xr.open_dataset(path, chunks={'time': -1})
 
-    era_native = era_native.sel(time=timeslice).mean(dim='time', keep_attrs=True)
+    era_native = era_native.sel(time=timeslice)
     era_native = era_native.rename({'msl': 'psl', 't2m': 'tas', 'tp':'pr', 'latitude':'lat', 'longitude':'lon'})
 
     # convert from "m of water per day" to "kg m^-2 s^-1"
     # See https://confluence.ecmwf.int/display/CKB/ERA5%3A+data+documentation for details
     era_native['pr'] *= 1000./(24.*60.*60.)
 
-    with util.HiddenPrints():
-        era = util.regrid_to_common(era_native)
+    era = util.regrid_to_common(era_native)
     era.attrs.update(era_native.attrs)
 
     era = era.coarsen({'lat':coarsen_size, 'lon': coarsen_size}, boundary='exact').mean()
 
     return era
+

@@ -5,12 +5,13 @@ day_in_s = (24.*60.*60.)
 
 # reverse lat list
 reverse_list = [
-    'SAR.MPIfM.MPIfM-01.historical.Amon.gn',
-    'SAR.HCCPR-HCCPR-01.historical.Amon.gn',
-    'TAR.MPIfM.MPIfM.historical.Amon.gn',
-    'CMIP3.IPSL.ipsl_cm4.historical.Amon.gn',
-    'CMIP3.MOHC.ukmo_hadcm3.historical.Amon.gn',
-    'CMIP5.MOHC.HadCM3.historical.Amon.gn'
+    'SAR.MPIfM.MPIfM-01.historical',
+    'SAR.HCCPR.HCCPR-01.historical',
+    'SAR.HCCPR.HCCPR-02.historical',
+    'TAR.MPIfM.MPIfM.historical',
+    'CMIP3.IPSL.ipsl_cm4.historical',
+    'CMIP3.MOHC.ukmo_hadcm3.historical',
+    'CMIP5.MOHC.HadCM3.historical'
 ]
 
 def quality_control(ds, varname, key, mip_id):
@@ -21,11 +22,12 @@ def quality_control(ds, varname, key, mip_id):
             # convert from cm/day to kg/m^2/s
             ds *= (cm_to_m * rho_water / day_in_s)
 
-        if ('THU-CIESM' in ds.attrs['parent_source_id']) and (varname == 'pr'):
-            ds *= np.nan
+        if 'parent_source_id' in ds.attrs:
+            if ('THU-CIESM' in ds.attrs['parent_source_id']) and (varname == 'pr'):
+                ds *= np.nan
 
-    if key in reverse_list:
+    if (".".join(key.split(".")[0:4])) in reverse_list:
         # TEMPORARY FIX: Correct models which inexplicably have latitude flipped
-        ds['lat'].values = ds['lat'].values[::-1]
+        ds = ds.assign_coords({'lat': ds['lat'].values[::-1]})
         
     return ds
