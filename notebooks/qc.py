@@ -22,8 +22,9 @@ def quality_control(ds, varname, key, mip_id):
             # convert from cm/day to kg/m^2/s
             ds *= (cm_to_m * rho_water / day_in_s)
 
-        if ('THU-CIESM' in ds.attrs['parent_source_id']) and (varname == 'pr'):
-            ds *= np.nan
+        if 'parent_source_id' in ds.attrs:
+            if ('THU-CIESM' in ds.attrs['parent_source_id']) and (varname == 'pr'):
+                ds *= np.nan
 
     if (".".join(key.split(".")[0:4])) in reverse_list:
         # TEMPORARY FIX: Correct models which inexplicably have latitude flipped

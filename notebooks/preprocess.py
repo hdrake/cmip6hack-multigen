@@ -73,6 +73,10 @@ def load_col_as_dict(col_dict, varnames, timeslice=None, coarsen_size=2):
                 if ('longitude' in ds.dims) and ('latitude' in ds.dims):
                     ds = ds.rename({'longitude':'lon', 'latitude': 'lat'})
 
+                if ('lon' not in ds.dims) and ('lat' not in ds.dims):
+                    print(f"Skip {key} due to unclear spatial dimensions: {ds.dims}.")
+                    continue
+                    
                 # Need this temporarily because setting 'decode_times': True is broken
                 ds = xr.decode_cf(ds)
                 ds['time'] = ds['time'].astype('<M8[ns]')
