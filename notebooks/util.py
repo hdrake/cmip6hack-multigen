@@ -24,15 +24,15 @@ def is_ncar_host():
 
 # Define the common target grid axes
 dlon, dlat = 1., 1.
-ds_out = xr.Dataset({'lat': (['lat'], np.arange(-90.+dlat/2., 90., dlat)),
-                     'lon': (['lon'], np.arange(0.+dlon/2., 360., dlon)),})
+ds_out = xr.Dataset({'lat': (['lat'], np.arange(-90.+dlat/2., 90., dlat), {"units": "degrees_north"}),
+                     'lon': (['lon'], np.arange(0.+dlon/2., 360., dlon), {"units": "degrees_east"})})
 
 # Regridding function
 def regrid_to_common(ds, ds_out=ds_out):
     """
     Regrid from rectilinear grid to common grid
     """
-    regridder = xe.Regridder(ds, ds_out, 'bilinear', periodic=True, reuse_weights=True)
+    regridder = xe.Regridder(ds, ds_out, 'bilinear', periodic=True)
     return regridder(ds)
 
 def calc_area(lat, lon, coarsen_size=1., dlat=1., dlon=1.):

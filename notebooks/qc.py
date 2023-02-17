@@ -27,6 +27,6 @@ def quality_control(ds, varname, key, mip_id):
 
     if (".".join(key.split(".")[0:4])) in reverse_list:
         # TEMPORARY FIX: Correct models which inexplicably have latitude flipped
-        ds['lat'].values = ds['lat'].values[::-1]
+        ds = ds.assign_coords({'lat': ds['lat'].values[::-1]})
         
     return ds
