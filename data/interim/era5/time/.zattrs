@@ -1,8 +1,0 @@
-{
-    "_ARRAY_DIMENSIONS": [
-        "time"
-    ],
-    "calendar": "gregorian",
-    "long_name": "time",
-    "units": "hours since 1900-01-01"
-}

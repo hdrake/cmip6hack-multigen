@@ -1,9 +1,0 @@
-{
-    "_ARRAY_DIMENSIONS": [
-        "month",
-        "ensemble",
-        "lat",
-        "lon"
-    ],
-    "coordinates": "member_id mip_id source_id"
-}

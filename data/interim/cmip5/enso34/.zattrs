@@ -1,7 +1,0 @@
-{
-    "_ARRAY_DIMENSIONS": [
-        "ensemble",
-        "time"
-    ],
-    "coordinates": "mip_id member_id source_id"
-}
