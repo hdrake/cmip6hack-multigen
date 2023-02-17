@@ -1,0 +1,6 @@
+Directory containing data, categorized as:
+
+- `/raw/` contains raw data files which are downloaded locally, such as reanalysis observations
+- `/interim/` contains intermediate processed files, which are small enough to store locally but not to be comitted
+- `/processed/` contains processed "plot-ready" output that is small enough to be comitted and version-controlled
+
