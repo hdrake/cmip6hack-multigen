@@ -4,6 +4,7 @@ PET0.ESMF_LogFile
 
 # Data
 data/raw/
+data/interim/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
